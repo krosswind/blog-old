@@ -3,10 +3,20 @@ dbinit = require './lib/dbinit2'
 settings = require './settings'
 util = require 'util'
 fs = require 'fs'
-app = require('express')()
+express = require("express")
+app = express()
 server = require("http").createServer(app)
 io = require('socket.io').listen(server)
 
+#To use with static crap, like images, jquery, etc
+
+app.configure () ->
+	#app.set 'view engine', 'jade'
+	#app.set 'views', __dirname + '/views'
+	app.use(express.static(__dirname, + '/public'));
+	console.log __dirname
+	#app.use exp.bodyParser()
+	#app.use exp.methodOverride()
 
 async.series([
 	(callback) ->
