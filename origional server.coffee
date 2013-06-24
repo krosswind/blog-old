@@ -1,11 +1,24 @@
+express = require 'express'
 async = require 'async'
 dbinit = require './lib/dbinit2'
 settings = require './settings'
-util = require 'util'
-fs = require 'fs'
-app = require('express')()
-server = require("http").createServer(app)
-io = require('socket.io').listen(server)
+
+appserver = require('http').createServer(app)
+#io = require('socket.io').listen(app)
+fs = require('fs')
+
+app = express();
+
+
+#App Configuration
+app.use '/', express.static __dirname + '/public',
+  maxAge: 86400000
+
+
+ 
+
+
+
 
 
 async.series([
@@ -20,16 +33,13 @@ async.series([
 
 				callback null
 
-	,(callback) -> 
-		# start connect
-		server.listen 3000
+	, (callback) -> 
+		# start express
+		appserver.listen settings.defaultport
+		console.log 'Listening on port ' + settings.defaultport
+		callback null
 
-		app.get "/", (req, res) ->
-			res.sendfile __dirname + "/public/index.html"
-		console.log "Server Listening on port 3000"
-			
-
-	], (err) ->
+], (err) ->
 	# callback error handler
 	if err
 		console.log "Problem with starting core services; "
@@ -37,18 +47,17 @@ async.series([
 		process.exit err
 )
 
-io.sockets.on "connection", (socket) ->
-	socket.emit "news",
-		hello: "world"
-
-	socket.on "my other event", (data) ->
-		console.log data
 
 
+	
 
 
-
-# CouchDB examples from James G
+###io.sockets.on 'connection', (socket) ->
+	socket.emit 'news',
+		hello: 'world' 
+	socket.on 'my other event', (data) ->
+	console.log data
+###
 ###
 
 

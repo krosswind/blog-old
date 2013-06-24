@@ -11,6 +11,6 @@ module.exports = {
 	# default local app port
 	defaultport: 3000
 	# client facing url
-	clientURL: 'http://example.com'
+	clientURL: 'http://localhost:index.html'
 
 }

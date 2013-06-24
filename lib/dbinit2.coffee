@@ -64,3 +64,7 @@ module.exports = (couchdb, callback) ->
 			addViews db, (err) ->
 				callback err, db
 
+
+				
+
+
