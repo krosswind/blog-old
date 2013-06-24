@@ -1,6 +1,6 @@
 async = require 'async'
 cradle = require 'cradle'
-designs = ['all']
+designs = ['blog']
 
 addViews = (db, cb) ->
 	async.series([
@@ -12,7 +12,7 @@ addViews = (db, cb) ->
 			newdesigns = [
 				# All view
 				{	all:
-						map: "function(doc) {if (!doc.closed && doc.type === 'all') {emit([doc.group, doc.modified], doc);}}"
+						map: "function(doc) {if (doc.type === 'all') {emit([doc.group, doc.modified], doc);}}"
 				}
 
 			]
